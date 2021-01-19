@@ -14,9 +14,19 @@
 */
 
 
-$router->get('/', function () use ($router) {
-    return 'ola mundo';
+
+
+$router->get('/api/carros', "CarrosController@getAll");
+
+$router->group(['prefix' =>"/api/carro"], function() use($router){
+    $router->get("/{id}", "CarrosController@get");
+    $router->post("/", "CarrosController@store");
+    $router->put("/{id}", "CarrosController@update");
+    $router->delete("/{id}", "CarrosController@destroy");
 });
+
+
+
 
 
 
