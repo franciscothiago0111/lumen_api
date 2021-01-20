@@ -2,43 +2,56 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use App\Models\Carro;
 
 class CarrosController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+   
+    private $model;
+    
+    public function __construct(Carro $carro)
     {
-        //
+        $this->model = $carro;
     }
 
    
 
     public function getAll(){
-        return "getAll";
+       $carros = $this->model->all();
+
+       return response()->json($carros);
     }
 
     public function get($id){
-        return "get" . $id;
+        $carro = $this->model->find($id);
+
+       return response()->json($carro);
     }
 
     public function store(Request $request){
-        dd($request->all());
+        $carro = $this->model->create($request->all());
+
+        return response()->json($carro);
     }
 
     public function update(Request $request, $id){
-        dd($id, $request->all());
-    }
+        $carro = $this->model->find($id)
+        ->update($request->all());
 
+        return response()->json($carro);
+    }
     
     public function destroy($id){
-        dd($id);
-    }
+        $carro = $this->model->find($id)
+        ->delete();
+
+        return response()->json(null);
+
+
 
 
 
     //
+    }
+
 }
